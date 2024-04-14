@@ -13,13 +13,16 @@
       </tbody>
     </table>
     
-    <button id="print_page">Print</button>
+    <button id="print_page">Download PDF</button>
 
+    <div id="seetext"></div>
     
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const table = JSON.parse(urlParams.get('table'));
 
+      document.getElementById('seetext').innerHTML = window.Telegram.WebApp.initData;
+      
       table.forEach((row,i)=>{
         var container = i === 0 ? document.querySelector('thead') : document.querySelector('tbody')
         container.InnerHTML += '<tr>'+row.map(c=>'<td>'+c+'</td>').join('')+'</tr>';

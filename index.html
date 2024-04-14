@@ -18,10 +18,11 @@
     <div id="seetext"></div>
     
     <script>
+      document.getElementById('seetext').innerHTML = window.Telegram.WebApp.initData;
+
+      
       const urlParams = new URLSearchParams(window.location.search);
       const table = JSON.parse(urlParams.get('table'));
-
-      document.getElementById('seetext').innerHTML = window.Telegram.WebApp.initData;
       
       table.forEach((row,i)=>{
         var container = i === 0 ? document.querySelector('thead') : document.querySelector('tbody')

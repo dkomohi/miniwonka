@@ -17,12 +17,8 @@
 
     
     <script>
-      while(!window.Telegram.WebApp){
-        await new Promise(resolve=>setTimeout(resolve, 500));
-      }
-      window.Telegram.WebApp.expand();
       const urlParams = new URLSearchParams(window.location.search);
-      const table = urlParams.get('table');
+      const table = JSON.parse(urlParams.get('table'));
 
       table.forEach((row,i)=>{
         var container = i === 0 ? document.querySelector('thead') : document.querySelector('tbody')

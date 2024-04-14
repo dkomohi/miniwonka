@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+  </head>
+  <body>
+    <table id='mytable'>
+      <thead>
+        
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    
+    <button id="print_page">Print</button>
+
+    
+    <script>
+      while(!window.Telegram.WebApp){
+        await new Promise(resolve=>setTimeout(resolve, 500));
+      }
+      window.Telegram.WebApp.expand();
+      const urlParams = new URLSearchParams(window.location.search);
+      const table = urlParams.get('table');
+
+      table.forEach((row,i)=>{
+        var container = i === 0 ? document.querySelector('thead') : document.querySelector('tbody')
+        container.InnerHTML += '<tr>'+row.map(c=>'<td>'+c+'</td>').join('')+'</tr>';
+      })
+      
+      document.getElementById('print_page').addEventListener('click',(e)=>{
+        window.print();
+      })
+    </script>
+  </body>
+  
+</html>

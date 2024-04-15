@@ -21,7 +21,7 @@
       (async function(){
         
         const urlParams = new URLSearchParams(window.location.search);
-        const card_id = JSON.parse(urlParams.get('card_id'));
+        const card_id = urlParams.get('card_id');
         var trxs = await fetch(buildUrl_('https://script.google.com/macros/s/AKfycbx0kY_oPXD8qGnMQBt8KZ29WxFWbfrQl_Cyen3F39GRzZeSEkOAGwwfbHN5NEuntY6O/exec',{id:card_id, operation:'getCardTransactions'})).then(res=>res.json());
         var keys = Object.keys(trxs[0]);
         document.querySelector('thead').InnerHTML += '<tr>'+keys.map(c=>'<th>'+c+'</th>').join('')+'</tr>';

@@ -18,20 +18,29 @@
     <div id="seetext"></div>
     
     <script>
-      document.getElementById('seetext').innerHTML = window.Telegram.WebApp.initData;
-
-      
-      const urlParams = new URLSearchParams(window.location.search);
-      const table = JSON.parse(urlParams.get('table'));
-      
-      table.forEach((row,i)=>{
-        var container = i === 0 ? document.querySelector('thead') : document.querySelector('tbody')
-        container.InnerHTML += '<tr>'+row.map(c=>'<td>'+c+'</td>').join('')+'</tr>';
-      })
+      (async function(){
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const card_id = JSON.parse(urlParams.get('card_id'));
+        var trxs = await fetch(buildUrl_('https://script.google.com/macros/s/AKfycbx0kY_oPXD8qGnMQBt8KZ29WxFWbfrQl_Cyen3F39GRzZeSEkOAGwwfbHN5NEuntY6O/exec',{id:card_id, operation:'getCardTransactions'})).then(res=>res.json());
+        var keys = Object.keys(trxs[0]);
+        document.querySelector('thead').InnerHTML += '<tr>'+keys.map(c=>'<th>'+c+'</th>').join('')+'</tr>';
+        trxs.forEach((t)=>{
+          document.querySelector('tbody').InnerHTML += '<tr>'+keys.map(c=>'<td>'+t[c]+'</td>').join('')+'</tr>';
+        })
+      })()
       
       document.getElementById('print_page').addEventListener('click',(e)=>{
         window.print();
       })
+      
+      function buildUrl_(url, params={}) {
+          var paramString = Object.keys(params).map(function(key) {
+              return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+          }).join('&');
+          return url + (url.indexOf('?') >= 0 ? '&' : '?') + paramString;
+      }
+
     </script>
   </body>
   

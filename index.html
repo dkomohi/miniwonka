@@ -34,23 +34,13 @@
       })()
       
       document.getElementById('print_page').addEventListener('click',(e)=>{
-        window.print();
-        var doc = new jsPDF();          
-        var elementHandler = {
-          '#ignorePDF': function (element, renderer) {
-            return true;
-          }
-        };
+        var doc = new jsPDF();
         var source = window.document.querySelector('#mytable');
-        doc.fromHTML(
-            source,
-            15,
-            15,
-            {
-              'width': 180,'elementHandlers': elementHandler
-            });
-        
-        doc.output("dataurlnewwindow");
+        var pdf = new jsPDF('p','pt','a4');
+        pdf.addHTML(source,function() {
+            pdf.save('web.pdf');
+        });
+        pdf.save('web.pdf');
       })
       
       function buildUrl_(url, params={}) {

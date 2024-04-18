@@ -1,11 +1,35 @@
 <html>
   <head>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
+    <style>
+      .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        display: grid;
+        animation: l14 4s infinite;
+      }
+      .loader::before,
+      .loader::after {    
+        content: "";
+        grid-area: 1/1;
+        border: 8px solid;
+        border-radius: 50%;
+        border-color: red red #0000 #0000;
+        mix-blend-mode: darken;
+        animation: l14 1s infinite linear;
+      }
+      .loader::after {
+        border-color: #0000 #0000 blue blue;
+        animation-direction: reverse;
+      }
+      @keyframes l14{ 
+        100%{transform: rotate(1turn)}
+      }
+    </style>
   </head>
   <body style="text-align: center;">
-    
-    <button id="print_page" style="font-size:2rem;">Download PDF</button>
+    <div class="loader"></div>
+    <!-- button id="print_page" style="font-size:2rem;">Download PDF</button -->
     <br>
     <br>
     <table id='mytable'>
@@ -35,6 +59,7 @@
         trxs.forEach((t)=>{
           document.querySelector('tbody').innerHTML += '<tr>'+keys.map(c=>'<td>'+t[c]+'</td>').join('')+'</tr>';
         })
+        document.querySelector('.loader').style.display = 'none';
       })()
       
       document.getElementById('print_page').addEventListener('click',(e)=>{
